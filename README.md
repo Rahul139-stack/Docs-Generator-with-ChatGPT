@@ -1,4 +1,4 @@
-# Docs-Generator-with-ChatGPT
+# Docs Generator Extension for VS code
 
 This is the README for the "docs-generator" extension.
 
