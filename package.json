@@ -1,0 +1,53 @@
+{
+  "name": "docs-generator",
+  "displayName": "docs-generator",
+  "description": "Create docs for each files ",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.79.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [],
+  "main": "./extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "docs-generator.generateDocumentation",
+        "title": "Generate Docs"
+      },
+      {
+        "command": "docs-generator.generateDocumentation",
+        "title": "Generate Docs"
+      }
+    ],
+    "menus": {
+      "explorer/context": [
+        {
+          "command": "docs-generator.generateDocumentation",
+          "group": "AI docs Genaerator"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "lint": "eslint .",
+    "pretest": "npm run lint",
+    "test": "node ./test/runTest.js"
+  },
+  "devDependencies": {
+    "@types/glob": "^8.1.0",
+    "@types/mocha": "^10.0.1",
+    "@types/node": "20.2.5",
+    "@types/vscode": "^1.79.0",
+    "@vscode/test-electron": "^2.3.2",
+    "eslint": "^8.41.0",
+    "glob": "^8.1.0",
+    "mocha": "^10.2.0",
+    "typescript": "^5.1.3"
+  },
+  "dependencies": {
+    "openai": "^3.3.0"
+  }
+}
