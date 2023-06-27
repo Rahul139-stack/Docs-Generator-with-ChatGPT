@@ -9,7 +9,6 @@ function getAPIKey() {
   const configuration = vscode.workspace.getConfiguration("docs-generator");
   return configuration.get("apiKey", "");
 }
-//xq5aiwx52g5vuysugejazdwqggyzxjkjscrvp5lny35rzl4oearq
 // Function to prompt the user to enter the API key
 async function promptAPIKey() {
   const inputBoxOptions = {

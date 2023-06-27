@@ -1,9 +1,10 @@
 {
-  "name": "docs-generator",
-  "displayName": "docs-generator",
+  "name": "docs-generator-chatgpt",
+  "displayName": "Docs Generator ChatGPT",
   "description": "Create docs for each files ",
   "publisher": "DocsGeneratorChatGPT",
   "version": "0.0.1",
+  "icon":"./assets/logo_transparent.png",
   "engines": {
     "vscode": "^1.79.0"
   },

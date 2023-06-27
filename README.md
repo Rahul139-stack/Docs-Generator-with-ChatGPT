@@ -22,7 +22,7 @@ This is the README for the "docs-generator" extension.
 - `Node` Installed
 - To use this extension, you need an internet connection to access the OpenAI API.
 
-## Extension Settings
+## Extension Settings(Important Step)
 
 This extension contributes the following settings:
 - It should update the "docs-generator.apiKey" attribute in the `settings.json`:
