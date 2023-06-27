@@ -12,7 +12,6 @@ function getAPIKey() {
 //xq5aiwx52g5vuysugejazdwqggyzxjkjscrvp5lny35rzl4oearq
 // Function to prompt the user to enter the API key
 async function promptAPIKey() {
-  console.log("promtffgg")
   const inputBoxOptions = {
     prompt: "Enter your OpenAI API key",
     placeHolder: "API key",
@@ -20,25 +19,26 @@ async function promptAPIKey() {
   };
 
   const apiKey = await vscode.window.showInputBox(inputBoxOptions);
-  console.log("apikey",apiKey)
   if (apiKey) {
     // Update the API key in the settings
     const configuration = vscode.workspace.getConfiguration();
-    console.log("----->",configuration)
+
     await configuration.update("copy-text.apiKey", apiKey, true);
-    console.log("--->",getAPIKey())
-    vscode.window.showInformationMessage("API key has been updated successfully.");
+
+    vscode.window.showInformationMessage(
+      "API key has been updated successfully."
+    );
     return apiKey;
   } else {
-    vscode.window.showWarningMessage("API key not provided. Cannot generate documentation.");
+    vscode.window.showWarningMessage(
+      "API key not provided. Cannot generate documentation."
+    );
     return null;
   }
 }
 
 // Command for generating documentation
 async function generateDocumentationCommand() {
-  console.log("generateDocumentation");
-
   // Prompt for the API key
   const apiKey = getAPIKey();
   if (!apiKey) {
@@ -54,13 +54,11 @@ async function generateDocumentationCommand() {
 
   if (folderUri && folderUri.length > 0) {
     const folderPath = folderUri[0].fsPath;
-    console.log("folderpath", folderPath);
 
     await generateDocumentation(folderPath);
+  } else {
+    vscode.window.showInformationMessage("No Folder selected");
   }
-	else {
-		vscode.window.showInformationMessage("No Folder selected");
-	}
 }
 
 // Axios call.
@@ -69,30 +67,33 @@ const triggerAPI = async (responseOptions) => {
   const apiKey = getAPIKey();
   if (!apiKey) {
     // Prompt the user to set the API key in settings.json
-    vscode.window.showInformationMessage("Please set your OpenAI API key in settings.json.");
+    vscode.window.showInformationMessage(
+      "Please set your OpenAI API key in settings.json."
+    );
     return null;
   }
 
-  return await axios.post(
-    "https://api.openai.com/v1/chat/completions",
-    responseOptions,
-    {
+  return await axios
+    .post("https://api.openai.com/v1/chat/completions", responseOptions, {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${apiKey}`,
       },
-    }
-  ).then(res => res).catch((error) => {
-		// if its un authorized show the error message.
-		if (error.response.status === 401) {
-			vscode.window.showErrorMessage('Please enter a valid API key.');
-		}
-		// if limit exceeded show the error message.
-		if (error.response.status === 402 || error.response.status === 429) {
-			vscode.window.showErrorMessage('You have exceeded the API limit. Please try again after some time.');
-		}
-		throw error;
-	});
+    })
+    .then((res) => res)
+    .catch((error) => {
+      // if its un authorized show the error message.
+      if (error.response.status === 401) {
+        vscode.window.showErrorMessage("Please enter a valid API key.");
+      }
+      // if limit exceeded show the error message.
+      if (error.response.status === 402 || error.response.status === 429) {
+        vscode.window.showErrorMessage(
+          "You have exceeded the API limit. Please try again after some time."
+        );
+      }
+      throw error;
+    });
 };
 
 async function generateDocumentation(folderPath) {
@@ -104,9 +105,9 @@ async function generateDocumentation(folderPath) {
   if (files.length > 0) {
     for (const file of files) {
       const filePath = path.join(folderPath, file);
-      console.log("filepath", filePath);
+
       parentFolderName = path.basename(path.dirname(filePath));
-      console.log("parentFolderName", parentFolderName);
+
       const fileName = path.parse(filePath).base;
 
       if (fs.statSync(filePath).isDirectory()) {
@@ -129,8 +130,6 @@ async function generateDocumentation(folderPath) {
           },
           async (progress) => {
             progress.report({ increment: 0 });
-
-  
 
             // Call OpenAI API to generate response for each code snippet
             const generatedDocumentation = [];
@@ -184,15 +183,21 @@ async function generateDocumentation(folderPath) {
 
             // Create or update documentation file
             const documentationPath = path.join(folderPath, "documentation.md");
-            fs.writeFileSync(documentationPath, generatedDocumentation.join("\n\n"));
+            fs.writeFileSync(
+              documentationPath,
+              generatedDocumentation.join("\n\n")
+            );
 
             vscode.window.showInformationMessage(
-              "Documentation generated successfully for folder: " + parentFolderName
+              "Documentation generated successfully for folder: " +
+                parentFolderName
             );
           }
         );
       } catch (error) {
-        vscode.window.showErrorMessage("Failed to generate documentation: " + error.message);
+        vscode.window.showErrorMessage(
+          "Failed to generate documentation: " + error.message
+        );
       }
     }
   } else {
@@ -205,7 +210,6 @@ async function generateDocumentation(folderPath) {
  * @param {{ subscriptions: vscode.Disposable[]; }} context
  */
 function activate(context) {
-  console.log("activate");
   const disposable = vscode.commands.registerCommand(
     "docs-generator.generateDocumentation",
     generateDocumentationCommand

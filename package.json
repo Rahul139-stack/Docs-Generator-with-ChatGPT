@@ -2,6 +2,7 @@
   "name": "docs-generator",
   "displayName": "docs-generator",
   "description": "Create docs for each files ",
+  "publisher": "DocsGeneratorChatGPT",
   "version": "0.0.1",
   "engines": {
     "vscode": "^1.79.0"
