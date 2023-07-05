@@ -25,6 +25,8 @@ This is the README for the "docs-generator" extension.
 ## Extension Settings(Important Step)
 
 This extension contributes the following settings:
+
+- ctrl+shift+p > Preferences : User Settings Open(JSON) > then this object
 - It should update the "docs-generator.apiKey" attribute in the `settings.json`:
   "docs-generator": {
   "apiKey": "YOUR_API_KEY"
